@@ -15,18 +15,24 @@
 * **`依赖`**
 
 	本项目依赖与ros的serial包，用于接受串口信息，安装方式如下：
+	```
 	sudo apt-get install ros-kinetic-serial 
+	```
 
 * **`安装`**
+	```
 	mkdir src
 	cd src
 	git clone https://github.com/hilbertletanger/imu_decode.git
 	cd ..
 	catkin_make
+	```
 
 * **`运行`**
+	```
 	source devel/setup.bash
 	roslaunch imu_serial_node demo.launch 
+	```
 
 #### 参数
 

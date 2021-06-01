@@ -1,49 +1,41 @@
-imu_serial_node
-=
-a simple ros serial node for imu, such as mpu 6050.
 
-you should change it by your serial Communication protocol.
-  this package depend on serial: http://wiki.ros.org/rosserial/
+导远组合导航570d的ros下解析程序
 
-#### Published Topics
+#### 发布的Topics
 
 * **`imu`** ([sensor_msgs::Imu])
 
-	The resulting Imu orientation.
+	包括六轴陀螺仪和加速度计，以及从三轴绝对方向角计算而来的 orientation.
 
-#### Published TF Transforms
+* **`Chassis_RTK`** ([my_msgs::ChassisMsg])
 
-*	The resulting orientation is published as a tf transform, the frame names can be set using the parameters.
+	包括其他信息例如经纬度等，显然这是我自定义的格式，如果需要通用格式例如sensor_msgs::NavSatFix ,请自行填写
 
+#### 依赖和安装
+* **`依赖`**
 
-#### Services
+	本项目依赖与ros的serial包，用于接受串口信息，安装方式如下：
+	sudo apt-get install ros-kinetic-serial 
 
-* **`set_zero_orientation`** ([std_srvs/Empty])
+* **`安装`**
+	mkdir src
+	cd src
+	git clone https://github.com/hilbertletanger/imu_decode.git
+	cd ..
+	catkin_make
 
-	This service sets the current orientation as the new zero orientation so that from now on only the difference to this orientation is sent.
+* **`运行`**
+	source devel/setup.bash
+	roslaunch imu_serial_node demo.launch 
 
-
-#### Parameters
+#### 参数
 
 * **`port`** (string, default: "/dev/ttyACM0")
 
-	The name of the serial port.
-
-* **`time_offset_in_seconds`** (double, default: 0.0)
-
-	This sets an offset which is added to the header timestamp of the imu-topic and the TF transforms. This can be used to synchronise the IMUs orientation values to values of another sensor.
+	串口名.
 
 
 * **`imu_frame_id`** (string, default: "imu_base")
 
 	Sets the name of the base frame for imu messages.
 
-
-* **`tf_parent_frame_id`** (string, default: "imu_base")
-
-	Sets the name of the parent frame in the tf transform.
-
-
-* **`tf_frame_id`** (string, default: "imu")
-
-	Sets the name of the own frame in the tf transform.
